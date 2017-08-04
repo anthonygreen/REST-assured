@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sinatra', '~> 1.4.0'
   s.add_dependency 'childprocess', '~> 0.3'
   s.add_dependency 'sinatra-flash'
+  s.add_dependency 'sinatra-cross_origin'
   s.add_dependency 'haml', '~> 4.0'
   s.add_dependency 'activerecord', '~> 4.0'
   s.add_dependency 'activeresource', '~> 4.0'

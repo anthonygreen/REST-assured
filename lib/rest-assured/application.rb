@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'haml'
 require 'sinatra/flash'
 require 'sinatra/partials'
+require 'sinatra/cross_origin'
 require 'rest-assured/config'
 require 'rest-assured/models/double'
 require 'rest-assured/models/redirect'
@@ -12,6 +13,14 @@ require 'rest-assured/routes/response'
 
 module RestAssured
   class Application < Sinatra::Base
+
+    configure do
+      enable :cross_origin
+    end
+
+    before do
+      response.headers['Access-Control-Allow-Origin'] = '*'
+    end
 
     include Config
 
@@ -34,6 +43,13 @@ module RestAssured
 
     include DoubleRoutes
     include RedirectRoutes
+
+    options "*" do
+      response.headers["Allow"] = "GET, POST, OPTIONS"
+      response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token"
+      response.headers["Access-Control-Allow-Origin"] = "*"
+      200
+    end
 
     %w{get post put delete patch}.each do |verb|
       send verb, /.*/ do
